@@ -36,7 +36,7 @@ func main() {
 			log.Println("Can't load welcome message", path, err)
 			return nil
 		}
-		_, err = b.Send(req.Sender, string(content), tb.ModeMarkdownV2)
+		_, err = b.Send(req.Sender, string(content), tb.ModeHTML)
 		if err != nil {
 			log.Println("Can't send welcome message", err)
 		}
