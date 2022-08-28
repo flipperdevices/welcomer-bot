@@ -25,7 +25,10 @@ func main() {
 
 	b.Handle(tb.OnChatJoinRequest, func(c tb.Context) error {
 		req := c.ChatJoinRequest()
-		b.ApproveChatJoinRequest(req.Chat, req.Sender)
+		err := b.ApproveChatJoinRequest(req.Chat, req.Sender)
+		if err != nil {
+			log.Println("Can't approve chat join request:", err)
+		}
 
 		path := filepath.Join(os.Getenv("MESSAGES_FOLDER"), fmt.Sprintf("%d.txt", req.Chat.ID))
 		content, err := ioutil.ReadFile(path)
@@ -33,7 +36,10 @@ func main() {
 			log.Println("Can't load welcome message", path, err)
 			return nil
 		}
-		b.Send(req.Sender, string(content), tb.ModeMarkdownV2)
+		_, err = b.Send(req.Sender, string(content), tb.ModeMarkdownV2)
+		if err != nil {
+			log.Println("Can't send welcome message", err)
+		}
 
 		return nil
 	})
