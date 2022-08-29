@@ -37,7 +37,7 @@ func main() {
 			log.Println("Can't send welcome message", err)
 		}
 		
-		err := b.ApproveChatJoinRequest(req.Chat, req.Sender)
+		err = b.ApproveChatJoinRequest(req.Chat, req.Sender)
 		if err != nil {
 			log.Println("Can't approve chat join request:", err)
 		}
