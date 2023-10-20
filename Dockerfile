@@ -1,16 +1,13 @@
-FROM golang:alpine as builder
+FROM python:3.11-alpine
 
-WORKDIR /app
-COPY go.mod go.sum ./
+COPY /pyproject.toml /poetry.lock ./
 
-RUN go mod download
+RUN apk add --no-cache curl gcc libffi-dev musl-dev
+
+RUN pip install poetry && \
+    poetry config virtualenvs.create false && \
+    poetry install
+
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o /go/bin/app .
-
-
-FROM alpine
-
-COPY --from=builder /go/bin/app /go/bin/app
-
-ENTRYPOINT ["/go/bin/app"]
+ENTRYPOINT ["python", "main.py"]
