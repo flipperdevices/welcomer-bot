@@ -38,7 +38,6 @@ async def join(request: types.ChatJoinRequest):
     message = await bot.send_message(
         chat_id=request.user_chat_id,
         text=welcome_text,
-        parse_mode="HTML",
     )
 
     # wait a few second before submitting the approval
