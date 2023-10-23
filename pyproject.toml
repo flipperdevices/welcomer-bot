@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "welcomer-bot"
+version = "0.1.0"
+description = ""
+authors = ["andrejcyrkunov <andrey.pwn@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^3.1.1"
+pygelf = "^0.4.2"
+loguru = "^0.7.2"
+pre-commit = "^3.5.0"
+
+[tool.ruff]
+exclude = [".git", "__pycache__", ".idea",".venv"]
+line-length = 120
+
+[tool.isort]
+multi_line_output = "3"
+length_sort = true
+reverse_sort = "1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
