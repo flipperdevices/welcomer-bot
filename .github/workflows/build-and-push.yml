@@ -57,14 +57,3 @@ jobs:
           tags: ${{ steps.tag.outputs.image_name }}:${{ steps.tag.outputs.image_tag }}
           cache-from: type=registry,ref=${{ steps.tag.outputs.image_name }}:buildcache
           cache-to: type=registry,ref=${{ steps.tag.outputs.image_name }}:buildcache,mode=max
-
-      - name: 'Trigger k8s to use new image'
-        if: ${{ (github.event_name != 'pull_request')
-            && (steps.tag.outputs.image_tag != '0.0.0')
-            && (!endsWith(steps.tag.outputs.image_tag, '-rc')) }}
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          repository: ${{ secrets.INFRASTRUCTURE_REPO }}
-          token: ${{ secrets.K8S_GITHUB_PAT }}
-          event-type: welcomer-bot-deploy
-          client-payload: '{"image_tag": "${{steps.tag.outputs.image_tag}}"}'
