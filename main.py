@@ -32,7 +32,7 @@ async def join(request: types.ChatJoinRequest):
         logger.error(f'Can\'t load welcome message in path: {welcome_text_path}')
         return
 
-    with open(welcome_text_path, '+r') as reader:
+    with open(welcome_text_path, 'r') as reader:
         welcome_text = reader.read()
 
     message = await bot.send_message(
